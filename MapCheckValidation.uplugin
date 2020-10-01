@@ -1,0 +1,21 @@
+{
+    "FileVersion" : 3,
+    "Version" : 1,
+    "VersionName" : "1.0",
+    "FriendlyName" : "Map Check Validation",
+    "Description" : "A plug-in which allows to run map checks using a commandlet",
+    "Category" : "Validation",
+    "CreatedBy" : "Michael Delva",
+    "CreatedByURL": "http://www.emidee.net",
+    "EnabledByDefault" : false,
+    "CanContainContent": false,
+
+    "Modules" :
+    [
+        {
+            "Name" : "MapCheckValidation",
+            "Type" : "Editor",
+            "LoadingPhase" : "PreDefault"
+        }
+    ]
+}
