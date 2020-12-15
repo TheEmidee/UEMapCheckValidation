@@ -1,7 +1,7 @@
 {
     "FileVersion" : 3,
-    "Version" : 1,
-    "VersionName" : "1.0",
+    "Version": 4.26,
+    "VersionName": "4.26", 
     "FriendlyName" : "Map Check Validation",
     "Description" : "A plug-in which allows to run map checks using a commandlet",
     "Category" : "Validation",
