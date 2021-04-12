@@ -1,5 +1,10 @@
 #include "MapCheckValidationCommandlet.h"
 
+#include <Editor.h>
+#include <Engine/LevelStreaming.h>
+#include <Engine/World.h>
+#include <Misc/PackageName.h>
+
 // ReSharper disable once CppInconsistentNaming
 DEFINE_LOG_CATEGORY_STATIC( LogMapCheckValidation, Warning, All )
 
@@ -20,13 +25,11 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
     TArray< FString > package_names;
 
     for ( const auto & param_key_pair : params_map )
-    {
         if ( param_key_pair.Key == "Maps" )
         {
             auto map_parameter_value = param_key_pair.Value;
 
-            const auto add_package = [ &package_names ]( const FString & package_name )
-            {
+            const auto add_package = [ &package_names ]( const FString & package_name ) {
                 FString map_file;
                 FPackageName::SearchForPackageOnDisk( package_name, nullptr, &map_file );
 
@@ -35,9 +38,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
                     UE_LOG( LogMapCheckValidation, Error, TEXT( "Could not find package %s" ), *package_name );
                 }
                 else
-                {
                     package_names.Add( *map_file );
-                }
             };
 
             // Allow support for -Map=Value1+Value2+Value3
@@ -45,16 +46,10 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
             map_parameter_value.ParseIntoArray( maps_package_names, TEXT( "," ) );
 
             if ( maps_package_names.Num() > 0 )
-            {
                 for ( const auto & map_package_name : maps_package_names )
-                {
                     add_package( map_package_name );
-                }
-            }
             else
-            {
                 add_package( map_parameter_value );
-            }
 
             /*for ( auto plus_index = maps.Find( TEXT( "+" ), ESearchCase::CaseSensitive ); plus_index != INDEX_NONE; plus_index = maps.Find( TEXT( "+" ), ESearchCase::CaseSensitive ) )
             {
@@ -70,7 +65,6 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 
             add_package( maps );*/
         }
-    }
 
     if ( package_names.Num() == 0 )
     {
