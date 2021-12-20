@@ -8,26 +8,27 @@ namespace UnrealBuildTool.Rules
             PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
             bEnforceIWYU = true;
             
-            //PrivateIncludePaths.Add("MapCheckValidation/Private");
-
             PublicDependencyModuleNames.AddRange(
                 new string[] { 
                     "Core",
                     "CoreUObject",
                     "Engine",
                     "TargetPlatform",
-                    "AssetRegistry"
+                    "AssetRegistry",
+                    "DeveloperSettings"
                 }
             );
 
             PrivateDependencyModuleNames.AddRange(
                 new string[] {
-                    "Slate",
-                    "SlateCore",
-                    "UnrealEd",
-                    "AssetRegistry",
-                    "EditorStyle",
-                    "Blutility"
+                    "UnrealEd"
+                }
+            );
+
+            PrivateIncludePaths.AddRange(
+                new string[]
+                {
+                    "MapCheckValidation/Private"
                 }
             );
         }
