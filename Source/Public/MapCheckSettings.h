@@ -15,5 +15,5 @@ public:
     UMapCheckSettings();
 
     UPROPERTY( config, EditAnywhere )
-    TArray< TSubclassOf< AMapCheckValidatorBase > > Validators;
+    TArray< TSoftClassPtr< AMapCheckValidatorBase > > Validators;
 };

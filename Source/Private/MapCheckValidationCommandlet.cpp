@@ -131,15 +131,19 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 
         if ( auto * settings = GetDefault< UMapCheckSettings >() )
         {
-            for ( const auto & validator_class : settings->Validators )
+            for ( const auto & validator_class_soft_ptr : settings->Validators )
             {
-                if ( validator_class != nullptr )
+                if ( auto * validator_class = validator_class_soft_ptr.LoadSynchronous() )
                 {
                     auto * validator = world->SpawnActor( validator_class );
 
                     if ( validator == nullptr )
                     {
                         UE_LOG( LogMapCheckValidation, Warning, TEXT( "Impossible to spawn the map check validator of type %s" ), *validator_class->GetName() );
+                    }
+                    else
+                    {
+                        UE_LOG( LogMapCheckValidation, Log, TEXT( "Spawned the map check validator of type %s" ), *validator_class->GetName() );
                     }
                 }
             }
