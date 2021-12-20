@@ -12,8 +12,4 @@ class MAPCHECKVALIDATION_API AMapCheckValidatorBase : public AActor
 
 public:
     AMapCheckValidatorBase();
-
-#if WITH_EDITOR
-    void CheckForErrors() override;
-#endif
 };
