@@ -13,10 +13,10 @@
 
     "Modules" :
     [
-        {
-            "Name" : "MapCheckValidation",
-            "Type" : "Editor",
-            "LoadingPhase" : "PreDefault"
-        }
+      {
+        "Name": "MapCheckValidation",
+        "Type": "Editor",
+        "LoadingPhase": "PostDefault"
+      }
     ]
 }
