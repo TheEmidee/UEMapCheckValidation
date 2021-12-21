@@ -2,10 +2,14 @@
 
 #include <EngineUtils.h>
 #include <Misc/UObjectToken.h>
+#include <Particles/ParticleSystemComponent.h>
 
 AMapCheckValidator_StaticSubLevels::AMapCheckValidator_StaticSubLevels()
 {
     MapSuffix = TEXT( "_Art" );
+
+    PrimitiveComponentClassesToIgnore.Emplace( USkeletalMeshComponent::StaticClass() );
+    PrimitiveComponentClassesToIgnore.Emplace( UFXSystemComponent::StaticClass() );
 }
 
 #if WITH_EDITOR
@@ -63,6 +67,18 @@ void AMapCheckValidator_StaticSubLevels::CheckForErrors()
                 for ( const auto * primitive_component : primitive_components )
                 {
                     if ( primitive_component == nullptr )
+                    {
+                        continue;
+                    }
+
+                    if ( primitive_component->IsEditorOnly() )
+                    {
+                        continue;
+                    }
+
+                    if ( PrimitiveComponentClassesToIgnore.FindByPredicate( [ primitive_component ]( const TSubclassOf< UPrimitiveComponent > & primitive_component_class_to_ignore ) {
+                             return primitive_component->IsA( primitive_component_class_to_ignore );
+                         } ) != nullptr )
                     {
                         continue;
                     }

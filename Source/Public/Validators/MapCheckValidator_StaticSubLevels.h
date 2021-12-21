@@ -30,4 +30,7 @@ private:
      */
     UPROPERTY( EditAnywhere )
     FString MapSuffix;
+
+    UPROPERTY( EditAnywhere )
+    TArray< TSubclassOf< UPrimitiveComponent > > PrimitiveComponentClassesToIgnore;
 };
