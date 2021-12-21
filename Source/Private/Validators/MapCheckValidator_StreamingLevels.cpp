@@ -2,6 +2,15 @@
 
 #include <Misc/UObjectToken.h>
 
+FMapCheckValidatorStreamingLevelFlags::FMapCheckValidatorStreamingLevelFlags():
+    bShouldBeVisible( true ),
+    bShouldAlwaysBeLoaded( false ),
+    bShouldBlockOnLoad( false ),
+    bShouldBlockOnUnload( false ),
+    bDisableDistanceStreaming( false )
+{
+}
+
 AMapCheckValidator_StreamingLevels::AMapCheckValidator_StreamingLevels()
 {
     LevelPrefix = TEXT( "L_" );
@@ -65,8 +74,8 @@ void AMapCheckValidator_StreamingLevels::CheckForErrors()
                 }
             }
 
-            const auto check_boolean = [ &MapCheck, this, package_name ]( const bool boolean, const FString & error_message ) {
-                if ( !boolean )
+            const auto check_boolean = [ &MapCheck, this, package_name ]( const bool actual_value, const bool required_value, const FString & error_message ) {
+                if ( actual_value != required_value )
                 {
                     MapCheck.Warning()
                         ->AddToken( FUObjectToken::Create( this ) )
@@ -75,11 +84,11 @@ void AMapCheckValidator_StreamingLevels::CheckForErrors()
                 }
             };
 
-            check_boolean( streaming_level->GetShouldBeVisibleFlag(), "must be visible" );
-            check_boolean( !streaming_level->ShouldBeAlwaysLoaded(), "must not be always loaded" );
-            check_boolean( !streaming_level->bShouldBlockOnLoad, "must not block on load" );
-            check_boolean( !streaming_level->bShouldBlockOnUnload, "must not block on unload" );
-            check_boolean( !streaming_level->bDisableDistanceStreaming, "must not disable distance streaming" );
+            check_boolean( streaming_level->GetShouldBeVisibleFlag(), SubLevelFlags.bShouldBeVisible, "must be visible" );
+            check_boolean( streaming_level->ShouldBeAlwaysLoaded(), SubLevelFlags.bShouldAlwaysBeLoaded, "must not be always loaded" );
+            check_boolean( streaming_level->bShouldBlockOnLoad, SubLevelFlags.bShouldBlockOnLoad, "must not block on load" );
+            check_boolean( streaming_level->bShouldBlockOnUnload, SubLevelFlags.bShouldBlockOnUnload, "must not block on unload" );
+            check_boolean( streaming_level->bDisableDistanceStreaming, SubLevelFlags.bDisableDistanceStreaming, "must not disable distance streaming" );
         }
     }
 }

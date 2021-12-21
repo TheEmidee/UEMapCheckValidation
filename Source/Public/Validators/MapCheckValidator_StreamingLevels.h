@@ -6,6 +6,42 @@
 
 #include "MapCheckValidator_StreamingLevels.generated.h"
 
+/*
+ * This validator checks that all the sub-levels of a scene respect some naming convention:
+ * - They must be in the same folder as the persistent level
+ * - Their name must contain the persistent level name
+ *
+ * You can also define the following properties for each sub-level:
+ * - Should be visible
+ * - Should not always be loaded (aka blueprint loaded)
+ * - Should not block on load
+ * - Should not block on unload
+ * - Should disable distance streaming
+ */
+
+USTRUCT()
+struct MAPCHECKVALIDATION_API FMapCheckValidatorStreamingLevelFlags
+{
+    GENERATED_USTRUCT_BODY()
+
+    FMapCheckValidatorStreamingLevelFlags();
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldBeVisible : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldAlwaysBeLoaded : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldBlockOnLoad : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldBlockOnUnload : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bDisableDistanceStreaming : 1;
+};
+
 UCLASS()
 class MAPCHECKVALIDATION_API AMapCheckValidator_StreamingLevels final : public AMapCheckValidatorBase
 {
@@ -42,4 +78,7 @@ private:
      */
     UPROPERTY( EditAnywhere )
     uint8 bLevelStreamingLevelNamesMustStartWithPersistentLevelName : 1;
+
+    UPROPERTY( EditAnywhere )
+    FMapCheckValidatorStreamingLevelFlags SubLevelFlags;
 };

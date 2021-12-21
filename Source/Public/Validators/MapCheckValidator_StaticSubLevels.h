@@ -6,6 +6,10 @@
 
 #include "MapCheckValidator_StaticSubLevels.generated.h"
 
+/*
+ * This validator checks that sub-levels ending with a defined suffix are set to static.
+ * It also checks that all primitive components of the actors of those sub-levels have their mobility set to Static too
+ */
 UCLASS()
 class MAPCHECKVALIDATION_API AMapCheckValidator_StaticSubLevels final : public AMapCheckValidatorBase
 {
