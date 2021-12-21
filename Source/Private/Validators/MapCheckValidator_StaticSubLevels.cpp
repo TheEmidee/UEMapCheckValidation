@@ -50,7 +50,7 @@ void AMapCheckValidator_StaticSubLevels::CheckForErrors()
         // So, we must get all actors and filter by their ULevel.
         for ( TActorIterator< AActor > actor_iterator( GetWorld() ); actor_iterator; ++actor_iterator )
         {
-            const AActor * actor = *actor_iterator;
+            const auto * actor = *actor_iterator;
 
             if ( actor->IsEditorOnly() )
             {

@@ -129,7 +129,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 
         world->FlushLevelStreaming( EFlushLevelStreamingType::Full );
 
-        if ( auto * settings = GetDefault< UMapCheckSettings >() )
+        if ( const auto * settings = GetDefault< UMapCheckSettings >() )
         {
             for ( const auto & validator_class_soft_ptr : settings->Validators )
             {

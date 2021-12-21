@@ -16,7 +16,7 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
 
     for ( TActorIterator< AActor > actor_iterator( GetWorld() ); actor_iterator; ++actor_iterator )
     {
-        const AActor * actor = *actor_iterator;
+        const auto * actor = *actor_iterator;
 
         if ( actor->IsEditorOnly() )
         {
@@ -48,7 +48,7 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
             const auto num_materials = primitive_component->GetNumMaterials();
             for ( auto material_index = 0; material_index < num_materials; material_index++ )
             {
-                const UMaterialInterface * material_interface = primitive_component->GetMaterial( material_index );
+                const auto * material_interface = primitive_component->GetMaterial( material_index );
                 if ( material_interface == nullptr )
                 {
                     continue;
