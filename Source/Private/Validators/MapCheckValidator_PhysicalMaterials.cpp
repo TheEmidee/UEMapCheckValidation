@@ -23,6 +23,9 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
             continue;
         }
 
+        const auto * actor_level = actor->GetLevel();
+        const auto actor_level_name = actor_level->GetOuter()->GetName();
+
         TInlineComponentArray< UPrimitiveComponent * > primitive_components( actor );
 
         for ( const auto * primitive_component : primitive_components )
@@ -69,6 +72,9 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
                         ->AddToken( FUObjectToken::Create( this ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                         ->AddToken( FUObjectToken::Create( actor ) )
+                        ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "in map %s" ), *actor_level_name ) ) ) )
+                        ->AddToken( FTextToken::Create( FText::FromString( "on component" ) ) )
+                        ->AddToken( FUObjectToken::Create( primitive_component ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "has material" ) ) )
                         ->AddToken( FUObjectToken::Create( material_interface ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "which does not have a valid physical material" ) ) );
