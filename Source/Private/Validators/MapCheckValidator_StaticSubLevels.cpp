@@ -62,6 +62,15 @@ void AMapCheckValidator_StaticSubLevels::CheckForErrors()
 
             if ( actor_level_name.EndsWith( MapSuffix ) )
             {
+                if ( actor->GetIsReplicated() )
+                {
+                    MapCheck.Warning()
+                        ->AddToken( FUObjectToken::Create( this ) )
+                        ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
+                        ->AddToken( FUObjectToken::Create( actor ) )
+                        ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "in map %s is set to replicated. All actors in a static sub-level must not replicate." ), *actor_level_name ) ) ) );
+                }
+
                 TInlineComponentArray< UPrimitiveComponent * > primitive_components( actor );
 
                 for ( const auto * primitive_component : primitive_components )
