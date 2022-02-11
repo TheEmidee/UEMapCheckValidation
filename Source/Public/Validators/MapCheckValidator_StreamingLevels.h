@@ -6,6 +6,23 @@
 
 #include "MapCheckValidator_StreamingLevels.generated.h"
 
+USTRUCT()
+struct MAPCHECKVALIDATION_API FMapCheckValidatorStreamingLevelFlags
+{
+    GENERATED_USTRUCT_BODY()
+
+    FMapCheckValidatorStreamingLevelFlags();
+
+    UPROPERTY( EditAnywhere )
+    uint8 bMustBeSet : 1;
+
+    UPROPERTY( EditAnywhere )
+    TArray< FString > MapNameRequiredTokens;
+
+    UPROPERTY( EditAnywhere )
+    TArray< FString > MapNameExcludedTokens;
+};
+
 /*
  * This validator checks that all the sub-levels of a scene respect some naming convention:
  * - They must be in the same folder as the persistent level
@@ -17,38 +34,15 @@
  * - Should not block on load
  * - Should not block on unload
  * - Should disable distance streaming
+ *
+ * For each of those flags, you can specify 
  */
-
-USTRUCT()
-struct MAPCHECKVALIDATION_API FMapCheckValidatorStreamingLevelFlags
-{
-    GENERATED_USTRUCT_BODY()
-
-    FMapCheckValidatorStreamingLevelFlags();
-
-    UPROPERTY( EditAnywhere )
-    uint8 bShouldBeVisible : 1;
-
-    UPROPERTY( EditAnywhere )
-    uint8 bShouldAlwaysBeLoaded : 1;
-
-    UPROPERTY( EditAnywhere )
-    uint8 bShouldBlockOnLoad : 1;
-
-    UPROPERTY( EditAnywhere )
-    uint8 bShouldBlockOnUnload : 1;
-
-    UPROPERTY( EditAnywhere )
-    uint8 bDisableDistanceStreaming : 1;
-};
-
 UCLASS()
 class MAPCHECKVALIDATION_API AMapCheckValidator_StreamingLevels final : public AMapCheckValidatorBase
 {
     GENERATED_BODY()
 
 public:
-
     AMapCheckValidator_StreamingLevels();
 
 #if WITH_EDITOR
@@ -56,7 +50,6 @@ public:
 #endif
 
 private:
-
     /*
      * Set here the prefix of all your levels. For example L_
      */
@@ -80,5 +73,17 @@ private:
     uint8 bLevelStreamingLevelNamesMustStartWithPersistentLevelName : 1;
 
     UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags SubLevelFlags;
+    FMapCheckValidatorStreamingLevelFlags ShouldBeVisibleFlagCheck;
+
+    UPROPERTY( EditAnywhere )
+    FMapCheckValidatorStreamingLevelFlags ShouldAlwaysBeLoadedFlagCheck;
+
+    UPROPERTY( EditAnywhere )
+    FMapCheckValidatorStreamingLevelFlags ShouldBlockOnLoadFlagCheck;
+
+    UPROPERTY( EditAnywhere )
+    FMapCheckValidatorStreamingLevelFlags ShouldBlockOnUnloadFlagCheck;
+
+    UPROPERTY( EditAnywhere )
+    FMapCheckValidatorStreamingLevelFlags DisableDistanceStreamingFlagCheck;
 };
