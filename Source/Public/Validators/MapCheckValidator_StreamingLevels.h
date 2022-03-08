@@ -14,9 +14,6 @@ struct MAPCHECKVALIDATION_API FMapCheckValidatorStreamingLevelFlags
     FMapCheckValidatorStreamingLevelFlags();
 
     UPROPERTY( EditAnywhere )
-    uint8 bShouldBeVisible : 1;
-
-    UPROPERTY( EditAnywhere )
     uint8 bShouldBeAlwaysLoaded : 1;
 
     UPROPERTY( EditAnywhere )

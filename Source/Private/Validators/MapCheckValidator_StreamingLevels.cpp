@@ -4,7 +4,6 @@
 #include <Misc/UObjectToken.h>
 
 FMapCheckValidatorStreamingLevelFlags::FMapCheckValidatorStreamingLevelFlags() :
-    bShouldBeVisible( false ),
     bShouldBeAlwaysLoaded( false ),
     bShouldBlockOnLoad( false ),
     bShouldBlockOnUnload( false ),
@@ -117,7 +116,6 @@ void AMapCheckValidator_StreamingLevels::CheckForErrors()
                     continue;
                 }
 
-                check_flag( streaming_level->GetShouldBeVisibleFlag(), streaming_level_flags.bShouldBeVisible, TEXT( "Visible" ) );
                 check_flag( streaming_level->ShouldBeAlwaysLoaded(), streaming_level_flags.bShouldBeAlwaysLoaded, TEXT( "AlwaysLoaded" ) );
                 check_flag( streaming_level->bShouldBlockOnLoad, streaming_level_flags.bShouldBlockOnLoad, TEXT( "BlockOnLoad" ) );
                 check_flag( streaming_level->bShouldBlockOnUnload, streaming_level_flags.bShouldBlockOnUnload, TEXT( "BlockOnUnload" ) );
