@@ -14,7 +14,16 @@ struct MAPCHECKVALIDATION_API FMapCheckValidatorStreamingLevelFlags
     FMapCheckValidatorStreamingLevelFlags();
 
     UPROPERTY( EditAnywhere )
-    uint8 bMustBeSet : 1;
+    uint8 bShouldBeAlwaysLoaded : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldBlockOnLoad : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bShouldBlockOnUnload : 1;
+
+    UPROPERTY( EditAnywhere )
+    uint8 bDisableDistanceStreaming : 1;
 
     UPROPERTY( EditAnywhere )
     TArray< FString > MapNameRequiredTokens;
@@ -73,17 +82,5 @@ private:
     uint8 bLevelStreamingLevelNamesMustStartWithPersistentLevelName : 1;
 
     UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags ShouldBeVisibleFlagCheck;
-
-    UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags ShouldAlwaysBeLoadedFlagCheck;
-
-    UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags ShouldBlockOnLoadFlagCheck;
-
-    UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags ShouldBlockOnUnloadFlagCheck;
-
-    UPROPERTY( EditAnywhere )
-    FMapCheckValidatorStreamingLevelFlags DisableDistanceStreamingFlagCheck;
+    TArray < FMapCheckValidatorStreamingLevelFlags > StreamingLevelFlags;
 };

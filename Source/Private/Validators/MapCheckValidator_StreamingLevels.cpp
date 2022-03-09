@@ -1,9 +1,13 @@
 #include "Validators/MapCheckValidator_StreamingLevels.h"
 
+#include <Kismet/KismetStringLibrary.h>
 #include <Misc/UObjectToken.h>
 
 FMapCheckValidatorStreamingLevelFlags::FMapCheckValidatorStreamingLevelFlags() :
-    bMustBeSet( false )
+    bShouldBeAlwaysLoaded( false ),
+    bShouldBlockOnLoad( false ),
+    bShouldBlockOnUnload( false ),
+    bDisableDistanceStreaming( false )
 {
 }
 
@@ -40,7 +44,8 @@ void AMapCheckValidator_StreamingLevels::CheckForErrors()
             FString package_name;
             FString package_path;
 
-            FPackageName::SplitLongPackageName( streaming_level->GetWorldAssetPackageName(), package_root, package_path, package_name );
+            const auto long_package_name = streaming_level->GetWorldAssetPackageName();
+            FPackageName::SplitLongPackageName( long_package_name, package_root, package_path, package_name );
 
             if ( bLevelStreamingLevelsMustBeInRootFolder )
             {
@@ -70,37 +75,54 @@ void AMapCheckValidator_StreamingLevels::CheckForErrors()
                 }
             }
 
-            const auto check_boolean = [ &MapCheck, this, package_name ]( const bool actual_value, const FMapCheckValidatorStreamingLevelFlags & flag, const FString & error_message ) {
-                for ( const auto & token : flag.MapNameRequiredTokens )
-                {
-                    if ( !package_name.Contains( token ) )
-                    {
-                        return;
-                    }
-                }
-
-                for ( const auto & token : flag.MapNameExcludedTokens )
-                {
-                    if ( package_name.Contains( token ) )
-                    {
-                        return;
-                    }
-                }
-
-                if ( actual_value != flag.bMustBeSet )
+            const auto check_flag = [ &MapCheck, this, package_name ]( const bool actual_value, const bool required_value, const FString & flag_name ) {
+                if ( actual_value != required_value )
                 {
                     MapCheck.Warning()
                         ->AddToken( FUObjectToken::Create( this ) )
                         ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "SubLevel %s" ), *package_name ) ) ) )
-                        ->AddToken( FTextToken::Create( FText::FromString( error_message ) ) );
+                        ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "must have the %s flag set to %s" ), *flag_name, *UKismetStringLibrary::Conv_BoolToString( required_value ) ) ) ) );
                 }
             };
 
-            check_boolean( streaming_level->GetShouldBeVisibleFlag(), ShouldBeVisibleFlagCheck, "must be visible" );
-            check_boolean( streaming_level->ShouldBeAlwaysLoaded(), ShouldAlwaysBeLoadedFlagCheck, "must not be always loaded" );
-            check_boolean( streaming_level->bShouldBlockOnLoad, ShouldBlockOnLoadFlagCheck, "must not block on load" );
-            check_boolean( streaming_level->bShouldBlockOnUnload, ShouldBlockOnUnloadFlagCheck, "must not block on unload" );
-            check_boolean( streaming_level->bDisableDistanceStreaming, DisableDistanceStreamingFlagCheck, "must not disable distance streaming" );
+            const auto can_check_level = [ &long_package_name ]( const FMapCheckValidatorStreamingLevelFlags & streaming_level_flags ) {
+                if ( streaming_level_flags.MapNameRequiredTokens.Num() > 0 )
+                {
+                    for ( const auto & token : streaming_level_flags.MapNameRequiredTokens )
+                    {
+                        if ( long_package_name.Contains( token ) )
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                for ( const auto & token : streaming_level_flags.MapNameExcludedTokens )
+                {
+                    if ( long_package_name.Contains( token ) )
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            };
+
+            for ( const auto & streaming_level_flags : StreamingLevelFlags )
+            {
+                if ( !can_check_level( streaming_level_flags ) )
+                {
+                    continue;
+                }
+
+                check_flag( streaming_level->ShouldBeAlwaysLoaded(), streaming_level_flags.bShouldBeAlwaysLoaded, TEXT( "AlwaysLoaded" ) );
+                check_flag( streaming_level->bShouldBlockOnLoad, streaming_level_flags.bShouldBlockOnLoad, TEXT( "BlockOnLoad" ) );
+                check_flag( streaming_level->bShouldBlockOnUnload, streaming_level_flags.bShouldBlockOnUnload, TEXT( "BlockOnUnload" ) );
+                check_flag( streaming_level->bDisableDistanceStreaming, streaming_level_flags.bDisableDistanceStreaming, TEXT( "DisableDistanceStreaming" ) );
+
+                break;
+            }
         }
     }
 }
