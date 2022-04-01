@@ -133,6 +133,10 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
         {
             streaming_level->SetShouldBeVisible( true );
             streaming_level->SetShouldBeLoaded( true );
+
+#if WITH_EDITOR
+            streaming_level->SetShouldBeVisibleInEditor( true );
+#endif
         }
 
         UE_LOG( LogMapCheckValidation, Log, TEXT( "Load %i streaming levels for world %s" ), streaming_levels.Num(), *world->GetName() );
