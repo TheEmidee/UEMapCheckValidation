@@ -6,7 +6,7 @@
 #include <Misc/PackageName.h>
 
 // ReSharper disable once CppInconsistentNaming
-DEFINE_LOG_CATEGORY_STATIC( LogMapCheckValidation, Warning, All )
+DEFINE_LOG_CATEGORY_STATIC( LogMapCheckValidation, Log, All )
 
 UMapCheckValidationCommandlet::UMapCheckValidationCommandlet()
 {
@@ -15,8 +15,8 @@ UMapCheckValidationCommandlet::UMapCheckValidationCommandlet()
 
 int32 UMapCheckValidationCommandlet::Main( const FString & params )
 {
-    UE_LOG( LogMapCheckValidation, Log, TEXT( "--------------------------------------------------------------------------------------------" ) );
-    UE_LOG( LogMapCheckValidation, Log, TEXT( "Running MapCheckValidation Commandlet" ) );
+    UE_LOG( LogMapCheckValidation, Display, TEXT( "--------------------------------------------------------------------------------------------" ) );
+    UE_LOG( LogMapCheckValidation, Display, TEXT( "Running MapCheckValidation Commandlet" ) );
     TArray< FString > tokens;
     TArray< FString > switches;
     TMap< FString, FString > params_map;
@@ -46,7 +46,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 
             // Allow support for -Map=Value1+Value2+Value3
             TArray< FString > maps_package_names;
-            map_parameter_value.ParseIntoArray( maps_package_names, TEXT( "," ) );
+            map_parameter_value.ParseIntoArray( maps_package_names, TEXT( "+" ) );
 
             if ( maps_package_names.Num() > 0 )
             {
@@ -70,7 +70,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 
     for ( const auto & package_name : package_names )
     {
-        UE_LOG( LogMapCheckValidation, Log, TEXT( "Will process %s" ), *package_name );
+        UE_LOG( LogMapCheckValidation, Display, TEXT( "Will process %s" ), *package_name );
 
         auto * package = LoadPackage( nullptr, *package_name, 0 );
         if ( package == nullptr )
@@ -122,7 +122,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
 #endif
         }
 
-        UE_LOG( LogMapCheckValidation, Log, TEXT( "Load %i streaming levels for world %s" ), streaming_levels.Num(), *world->GetName() );
+        UE_LOG( LogMapCheckValidation, Display, TEXT( "Load %i streaming levels for world %s" ), streaming_levels.Num(), *world->GetName() );
 
         world->FlushLevelStreaming( EFlushLevelStreamingType::Full );
 
@@ -133,10 +133,10 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
         world_context.SetCurrentWorld( nullptr );
         GWorld = nullptr;
 
-        UE_LOG( LogMapCheckValidation, Log, TEXT( "Finished processing of %s" ), *package_name );
+        UE_LOG( LogMapCheckValidation, Display, TEXT( "Finished processing of %s" ), *package_name );
     }
 
-    UE_LOG( LogMapCheckValidation, Log, TEXT( "Successfully finished running MapCheckValidation Commandlet" ) );
-    UE_LOG( LogMapCheckValidation, Log, TEXT( "--------------------------------------------------------------------------------------------" ) );
+    UE_LOG( LogMapCheckValidation, Display, TEXT( "Successfully finished running MapCheckValidation Commandlet" ) );
+    UE_LOG( LogMapCheckValidation, Display, TEXT( "--------------------------------------------------------------------------------------------" ) );
     return 0;
 }
