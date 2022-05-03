@@ -1,6 +1,5 @@
-#include "MapCheckValidationCommandlet.h"
-
 #include "MapCheckSettings.h"
+#include "MapCheckValidationCommandlet.h"
 #include "MapCheckValidatorBase.h"
 
 #include <Editor.h>
@@ -62,20 +61,6 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
             {
                 add_package( map_parameter_value );
             }
-
-            /*for ( auto plus_index = maps.Find( TEXT( "+" ), ESearchCase::CaseSensitive ); plus_index != INDEX_NONE; plus_index = maps.Find( TEXT( "+" ), ESearchCase::CaseSensitive ) )
-            {
-                const auto next_map = maps.Left( plus_index );
-
-                if ( next_map.Len() > 0 )
-                {
-                    add_package( next_map );
-                }
-
-                maps.RightInline( maps.Len() - ( plus_index + 1 ), false );
-            }
-
-            add_package( maps );*/
         }
     }
 
@@ -142,26 +127,6 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
         UE_LOG( LogMapCheckValidation, Log, TEXT( "Load %i streaming levels for world %s" ), streaming_levels.Num(), *world->GetName() );
 
         world->FlushLevelStreaming( EFlushLevelStreamingType::Full );
-
-        if ( const auto * settings = GetDefault< UMapCheckSettings >() )
-        {
-            for ( const auto & validator_class_soft_ptr : settings->Validators )
-            {
-                if ( auto * validator_class = validator_class_soft_ptr.LoadSynchronous() )
-                {
-                    auto * validator = world->SpawnActor( validator_class );
-
-                    if ( validator == nullptr )
-                    {
-                        UE_LOG( LogMapCheckValidation, Warning, TEXT( "Impossible to spawn the map check validator of type %s" ), *validator_class->GetName() );
-                    }
-                    else
-                    {
-                        UE_LOG( LogMapCheckValidation, Log, TEXT( "Spawned the map check validator of type %s" ), *validator_class->GetName() );
-                    }
-                }
-            }
-        }
 
         GEditor->HandleMapCommand( TEXT( "CHECK" ), *GLog, world );
 

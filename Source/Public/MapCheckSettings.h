@@ -13,7 +13,4 @@ class MAPCHECKVALIDATION_API UMapCheckSettings final : public UDeveloperSettings
 
 public:
     UMapCheckSettings();
-
-    UPROPERTY( config, EditAnywhere )
-    TArray< TSoftClassPtr< AMapCheckValidatorBase > > Validators;
 };
