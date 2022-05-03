@@ -21,14 +21,17 @@ void AMapCheckValidator_NoActorOfClass::CheckForErrors()
                 continue;
             }
 
-            const auto * actor_level = actor->GetLevel();
-            const auto actor_level_name = actor_level->GetOuter()->GetName();
+            if ( actor->GetClass() == forbidden_class )
+            {
+                const auto * actor_level = actor->GetLevel();
+                const auto actor_level_name = actor_level->GetOuter()->GetName();
 
-            MapCheck.Error()
-                ->AddToken( FUObjectToken::Create( this ) )
-                ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
-                ->AddToken( FUObjectToken::Create( actor ) )
-                ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "in map %s is an actor of type %s or derived and is forbidden in the level." ), *actor_level_name, *GetNameSafe( forbidden_class ) ) ) ) );
+                MapCheck.Error()
+                    ->AddToken( FUObjectToken::Create( this ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
+                    ->AddToken( FUObjectToken::Create( actor ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "in map %s is an actor of type %s or derived and is forbidden in the level." ), *actor_level_name, *GetNameSafe( forbidden_class ) ) ) ) );
+            }
         }
     }
 }

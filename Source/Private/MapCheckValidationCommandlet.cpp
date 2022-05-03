@@ -1,6 +1,4 @@
-#include "MapCheckSettings.h"
 #include "MapCheckValidationCommandlet.h"
-#include "MapCheckValidatorBase.h"
 
 #include <Editor.h>
 #include <Engine/LevelStreaming.h>
