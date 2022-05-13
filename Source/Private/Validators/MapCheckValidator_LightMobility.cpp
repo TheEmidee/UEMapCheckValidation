@@ -40,10 +40,9 @@ void AMapCheckValidator_LightMobility::CheckForErrors()
 
         auto has_expected_mobility = light_mobility == EComponentMobility::Static;
         auto expected_mobility_string = FString( "Static" );
+        const auto not_static_tag = FString( "NotStatic" );
 
-        const auto light_component_name = GetNameSafe( light_component );
-
-        if ( light_component->IsA< UDirectionalLightComponent >() || light_component_name.EndsWith( "_NotStatic" ) )
+        if ( light_component->IsA< UDirectionalLightComponent >() || light_component->ComponentHasTag( *not_static_tag ) )
         {
             has_expected_mobility = light_mobility == EComponentMobility::Static || EComponentMobility::Stationary;
             expected_mobility_string = FString( "Static or Stationary" );
@@ -51,6 +50,7 @@ void AMapCheckValidator_LightMobility::CheckForErrors()
 
         if ( !has_expected_mobility )
         {
+            const auto light_component_name = GetNameSafe( light_component );
             const auto light_mobility_string = UEnum::GetDisplayValueAsText( light_mobility ).ToString();
             auto light_level_name = light_level->GetOuter()->GetName();
 
@@ -58,11 +58,14 @@ void AMapCheckValidator_LightMobility::CheckForErrors()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                 ->AddToken( FUObjectToken::Create( light_actor ) )
-                ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "in map %s has component %s with light mobility %s instead of %s." ),
-                    *light_level_name,
-                    *light_component_name,
-                    *light_mobility_string,
-                    *expected_mobility_string ) ) ) );
+                ->AddToken( FTextToken::Create(
+                    FText::FromString(
+                        FString::Printf( TEXT( "in map %s has component %s with light mobility %s instead of %s. To allow lights to not be static, add the tag %s to the light component." ),
+                            *light_level_name,
+                            *light_component_name,
+                            *light_mobility_string,
+                            *expected_mobility_string,
+                            *not_static_tag ) ) ) );
         }
     }
 }
