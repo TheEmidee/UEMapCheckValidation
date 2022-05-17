@@ -1,8 +1,7 @@
 #include "Validators/MapCheckValidator_PhysicalMaterials.h"
 
-#include "Materials/Material.h"
-
 #include <EngineUtils.h>
+#include <Materials/Material.h>
 #include <Misc/UObjectToken.h>
 
 // This comes from https://alanedwardes.com/blog/posts/custom-map-checker-ue4/
