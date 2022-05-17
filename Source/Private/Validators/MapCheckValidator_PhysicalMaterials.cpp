@@ -1,5 +1,7 @@
 #include "Validators/MapCheckValidator_PhysicalMaterials.h"
 
+#include "Materials/Material.h"
+
 #include <EngineUtils.h>
 #include <Misc/UObjectToken.h>
 
@@ -59,12 +61,20 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
                     continue;
                 }
 
+                seen_materials.Add( material_interface );
+
                 if ( material_interface->GetBlendMode() == EBlendMode::BLEND_Additive )
                 {
                     continue;
                 }
 
-                seen_materials.Add( material_interface );
+                if ( auto * material = material_interface->GetMaterial() )
+                {
+                    if ( material->MaterialDomain != MD_Surface )
+                    {
+                        continue;
+                    }
+                }
 
                 if ( material_interface->GetPhysicalMaterial() == nullptr || material_interface->GetPhysicalMaterial() == GEngine->DefaultPhysMaterial )
                 {
