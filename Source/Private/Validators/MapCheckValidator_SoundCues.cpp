@@ -33,7 +33,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
             continue;
         }
 
-        const auto * sound = audio_component->Sound;
+        const auto * sound = audio_component->Sound.Get();
 
         if ( !IsValid( sound ) )
         {
@@ -67,7 +67,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
             continue;
         }
 
-        const auto * sound_class = sound_cue->SoundClassObject;
+        const auto * sound_class = sound_cue->SoundClassObject.Get();
 
         if ( !IsValid( sound_class ) )
         {
