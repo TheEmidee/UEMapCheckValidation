@@ -62,7 +62,7 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
 
                 seen_materials.Add( material_interface );
 
-                if ( material_interface->GetBlendMode() == EBlendMode::BLEND_Additive )
+                if ( material_interface->GetBlendMode() != EBlendMode::BLEND_Opaque )
                 {
                     continue;
                 }
