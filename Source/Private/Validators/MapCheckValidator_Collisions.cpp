@@ -33,6 +33,19 @@ void AMapCheckValidator_Collisions::CheckForErrors()
 
         const auto collision_profile = primitive_component->GetCollisionProfileName();
 
+        if ( ForbiddenPresetNames.Contains( collision_profile ) )
+        {
+            MapCheck.Error()
+                ->AddToken( FUObjectToken::Create( this ) )
+                ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
+                ->AddToken( FUObjectToken::Create( actor ) )
+                ->AddToken( FTextToken::Create(
+                    FText::FromString(
+                        FString::Printf( TEXT( "has component %s with forbidden collision preset %s." ),
+                            *primitive_component->GetName(),
+                            *collision_profile.ToString() ) ) ) );
+        }
+
         for ( const auto channel : ForbiddenBlockChannels )
         {
             const auto response = primitive_component->GetCollisionResponseToChannel( channel );
@@ -48,19 +61,6 @@ void AMapCheckValidator_Collisions::CheckForErrors()
                                 *primitive_component->GetName(),
                                 *collision_profile.ToString() ) ) ) );
             }
-        }
-
-        if ( ForbiddenPresetNames.Contains( collision_profile ) )
-        {
-            MapCheck.Error()
-                ->AddToken( FUObjectToken::Create( this ) )
-                ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
-                ->AddToken( FUObjectToken::Create( actor ) )
-                ->AddToken( FTextToken::Create(
-                    FText::FromString(
-                        FString::Printf( TEXT( "has component %s with forbidden collision preset %s." ),
-                            *primitive_component->GetName(),
-                            *collision_profile.ToString() ) ) ) );
         }
     }
 }
