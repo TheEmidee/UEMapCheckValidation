@@ -31,6 +31,11 @@ void AMapCheckValidator_Collisions::CheckForErrors()
             continue;
         }
 
+        if ( level->IsCurrentLevel() )
+        {
+            continue;
+        }
+
         const auto collision_profile = primitive_component->GetCollisionProfileName();
 
         if ( ForbiddenPresetNames.Contains( collision_profile ) )
