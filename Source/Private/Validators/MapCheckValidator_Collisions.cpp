@@ -1,8 +1,6 @@
 #include "Validators/MapCheckValidator_Collisions.h"
 
-#include "Misc/UObjectToken.h"
-
-#include <Engine/Light.h>
+#include <Misc/UObjectToken.h>
 
 #if WITH_EDITOR
 void AMapCheckValidator_Collisions::CheckForErrors()
