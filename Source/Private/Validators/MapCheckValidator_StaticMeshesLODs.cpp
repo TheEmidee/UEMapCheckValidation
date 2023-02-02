@@ -38,7 +38,7 @@ void AMapCheckValidator_StaticMeshesLODs::CheckForErrors()
 
             auto static_mesh = primitive_component->GetStaticMesh();
 
-            if ( static_mesh.IsNull() )
+            if ( static_mesh == nullptr )
             {
                 MapCheck.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
