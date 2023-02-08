@@ -44,7 +44,8 @@ void AMapCheckValidator_Collisions::CheckForErrors()
                 ->AddToken( FUObjectToken::Create( actor ) )
                 ->AddToken( FTextToken::Create(
                     FText::FromString(
-                        FString::Printf( TEXT( "has component %s with forbidden collision preset %s." ),
+                        FString::Printf( TEXT( "in map %s has component %s with forbidden collision preset %s." ),
+                            *level->GetName(),
                             *primitive_component->GetName(),
                             *collision_profile.ToString() ) ) ) );
         }
@@ -60,7 +61,8 @@ void AMapCheckValidator_Collisions::CheckForErrors()
                     ->AddToken( FUObjectToken::Create( actor ) )
                     ->AddToken( FTextToken::Create(
                         FText::FromString(
-                            FString::Printf( TEXT( "has component %s with forbidden blocking collision respone %s." ),
+                            FString::Printf( TEXT( "in map %s has component %s with forbidden blocking collision respone %s." ),
+                                *level->GetName(),
                                 *primitive_component->GetName(),
                                 *collision_profile.ToString() ) ) ) );
             }
