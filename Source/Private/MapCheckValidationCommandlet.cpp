@@ -1,5 +1,6 @@
 #include "MapCheckValidationCommandlet.h"
 
+#include <AI/NavigationSystemBase.h>
 #include <Editor.h>
 #include <Engine/LevelStreaming.h>
 #include <Engine/World.h>
@@ -94,7 +95,7 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
             ivs.RequiresHitProxies( false );
             ivs.ShouldSimulatePhysics( false );
             ivs.EnableTraceCollision( false );
-            ivs.CreateNavigation( false );
+            ivs.CreateNavigation( true );
             ivs.CreateAISystem( false );
             ivs.AllowAudioPlayback( false );
             ivs.CreatePhysicsScene( true );
@@ -109,6 +110,8 @@ int32 UMapCheckValidationCommandlet::Main( const FString & params )
         GWorld = world;
 
         world->LoadSecondaryLevels( true, nullptr );
+
+        FNavigationSystem::AddNavigationSystemToWorld( *world, FNavigationSystemRunMode::EditorMode );
 
         const auto & streaming_levels = world->GetStreamingLevels();
 
