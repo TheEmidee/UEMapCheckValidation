@@ -15,7 +15,8 @@ namespace UnrealBuildTool.Rules
                     "Engine",
                     "TargetPlatform",
                     "AssetRegistry",
-                    "DeveloperSettings"
+                    "DeveloperSettings",
+                    "AIModule"
                 }
             );
 
