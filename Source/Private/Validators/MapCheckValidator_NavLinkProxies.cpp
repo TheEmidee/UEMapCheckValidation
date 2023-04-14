@@ -38,7 +38,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                    ->AddToken( FUObjectToken::Create( actor_level ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "has invalid SupportAgents." ) ) );
             }
         };
@@ -62,7 +62,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                    ->AddToken( FUObjectToken::Create( actor_level ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "has smart link enabled." ) ) );
             }
             else
@@ -78,7 +78,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                         ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                         ->AddToken( FUObjectToken::Create( actor ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                        ->AddToken( FUObjectToken::Create( actor_level ) )
+                        ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "has smart link enabled but has also point links." ) ) );
                 }
                 else
@@ -96,7 +96,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                    ->AddToken( FUObjectToken::Create( actor_level ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "does not have smart link enabled." ) ) );
             }
             else if ( point_links.IsEmpty() )
@@ -106,7 +106,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                    ->AddToken( FUObjectToken::Create( actor_level ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "has simple link enabled but no points are defined." ) ) );
             }
             else
