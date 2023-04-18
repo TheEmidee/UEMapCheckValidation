@@ -1,10 +1,9 @@
 #include "Validators/MapCheckValidator_NavLinkProxies.h"
 
-#include "NavLinkCustomComponent.h"
-#include "Navigation/NavLinkProxy.h"
-
 #include <EngineUtils.h>
 #include <Misc/UObjectToken.h>
+#include <NavLinkCustomComponent.h>
+#include <Navigation/NavLinkProxy.h>
 
 #if WITH_EDITOR
 void AMapCheckValidator_NavLinkProxies::CheckForErrors()
