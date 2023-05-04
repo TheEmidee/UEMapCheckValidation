@@ -50,11 +50,15 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
             }
         };
 
+        const auto * smart_link_component = actor->GetSmartLinkComp();
+        const auto smart_link_modifier = smart_link_component->GetLinkModifier();
+        auto point_links_without_smart_link_modifier = point_links;
+        point_links_without_smart_link_modifier.RemoveAll( [ smart_link_modifier ]( const FNavigationLink & link ) {
+            return link.Left == smart_link_modifier.Left && link.Right == smart_link_modifier.Right && link.Direction == smart_link_modifier.Direction && link.SupportedAgents.IsSame( smart_link_modifier.SupportedAgents );
+        } );
+
         if ( actor->IsSmartLinkEnabled() )
         {
-            const auto * smart_link_component = actor->GetSmartLinkComp();
-            const auto smart_link_modifier = smart_link_component->GetLinkModifier();
-
             if ( bForbidSmartNavLinks )
             {
                 MapCheck.Error()
@@ -65,31 +69,25 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
                     ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "has smart link enabled." ) ) );
             }
+            else if ( point_links_without_smart_link_modifier.Num() > 1 )
+            {
+                MapCheck.Error()
+                    ->AddToken( FUObjectToken::Create( this ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
+                    ->AddToken( FUObjectToken::Create( actor ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
+                    ->AddToken( FTextToken::Create( FText::FromString( "has smart link enabled but has also point links." ) ) );
+            }
             else
             {
-                point_links.RemoveAll( [ smart_link_modifier ]( const FNavigationLink & link ) {
-                    return link.Left == smart_link_modifier.Left && link.Right == smart_link_modifier.Right && link.Direction == smart_link_modifier.Direction && link.SupportedAgents.IsSame( smart_link_modifier.SupportedAgents );
-                } );
-
-                if ( point_links.Num() > 1 )
-                {
-                    MapCheck.Error()
-                        ->AddToken( FUObjectToken::Create( this ) )
-                        ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
-                        ->AddToken( FUObjectToken::Create( actor ) )
-                        ->AddToken( FTextToken::Create( FText::FromString( "in map" ) ) )
-                        ->AddToken( FTextToken::Create( FText::FromString( actor_level_name ) ) )
-                        ->AddToken( FTextToken::Create( FText::FromString( "has smart link enabled but has also point links." ) ) );
-                }
-                else
-                {
-                    check_supported_agents_for_link( smart_link_modifier );
-                }
+                check_supported_agents_for_link( smart_link_modifier );
             }
         }
         else
         {
-            if ( bForbidSimpleNavLinks )
+            // The second check is here to prevent from spitting an error when we have a smart link that is valid but disabled
+            if ( bForbidSimpleNavLinks && !point_links_without_smart_link_modifier.IsEmpty() )
             {
                 MapCheck.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
