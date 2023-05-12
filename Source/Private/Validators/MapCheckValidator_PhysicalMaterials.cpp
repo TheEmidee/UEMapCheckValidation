@@ -1,6 +1,8 @@
 #include "Validators/MapCheckValidator_PhysicalMaterials.h"
 
 #include <EngineUtils.h>
+#include <Logging/MessageLog.h>
+#include <MaterialDomain.h>
 #include <Materials/Material.h>
 #include <Misc/UObjectToken.h>
 

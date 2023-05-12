@@ -1,6 +1,7 @@
 #include "Validators/MapCheckValidator_StaticMeshesLODs.h"
 
 #include <EngineUtils.h>
+#include <Logging/MessageLog.h>
 #include <Misc/UObjectToken.h>
 
 #if WITH_EDITOR

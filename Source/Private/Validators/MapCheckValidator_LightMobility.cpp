@@ -2,8 +2,7 @@
 
 #include <Components/DirectionalLightComponent.h>
 #include <Components/LightComponentBase.h>
-#include <Engine/Light.h>
-#include <EngineUtils.h>
+#include <Logging/MessageLog.h>
 #include <Misc/UObjectToken.h>
 
 #if WITH_EDITOR
