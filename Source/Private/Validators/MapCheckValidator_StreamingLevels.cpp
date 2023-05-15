@@ -1,6 +1,7 @@
 #include "Validators/MapCheckValidator_StreamingLevels.h"
 
 #include <Kismet/KismetStringLibrary.h>
+#include <Logging/MessageLog.h>
 #include <Misc/UObjectToken.h>
 
 FMapCheckValidatorStreamingLevelFlags::FMapCheckValidatorStreamingLevelFlags() :
