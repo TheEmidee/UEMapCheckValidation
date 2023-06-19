@@ -1,6 +1,7 @@
 #include "Validators/MapCheckValidator_NavLinkProxies.h"
 
 #include <EngineUtils.h>
+#include <Logging/MessageLog.h>
 #include <Misc/UObjectToken.h>
 #include <NavLinkCustomComponent.h>
 #include <Navigation/NavLinkProxy.h>
@@ -10,7 +11,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( TActorIterator< ANavLinkProxy > actor_iterator( GetWorld() ); actor_iterator; ++actor_iterator )
     {
@@ -32,7 +33,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
         const auto check_supported_agents_for_link = [ & ]( const FNavigationLink & nav_link ) {
             if ( !nav_link.SupportedAgents.IsSame( SupportedAgents ) )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
@@ -60,7 +61,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
         {
             if ( bForbidSmartNavLinks )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
@@ -88,7 +89,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
             // The second check is here to prevent from spitting an error when we have a smart link that is valid but disabled
             if ( bForbidSimpleNavLinks && !point_links_without_smart_link_modifier.IsEmpty() )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
@@ -98,7 +99,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
             }
             else if ( point_links.IsEmpty() )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )

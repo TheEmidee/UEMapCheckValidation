@@ -13,7 +13,7 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     TSet< const UMaterialInterface * > seen_materials;
 
@@ -79,7 +79,7 @@ void AMapCheckValidator_PhysicalMaterials::CheckForErrors()
 
                 if ( material_interface->GetPhysicalMaterial() == nullptr || material_interface->GetPhysicalMaterial() == GEngine->DefaultPhysMaterial )
                 {
-                    MapCheck.Warning()
+                    map_check.Warning()
                         ->AddToken( FUObjectToken::Create( this ) )
                         ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                         ->AddToken( FUObjectToken::Create( actor ) )

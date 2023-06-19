@@ -8,7 +8,7 @@ void AMapCheckValidator_Collisions::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( TObjectIterator< UPrimitiveComponent > primitive_component_iterator; primitive_component_iterator; ++primitive_component_iterator )
     {
@@ -39,7 +39,7 @@ void AMapCheckValidator_Collisions::CheckForErrors()
 
         if ( ForbiddenPresetNames.Contains( collision_profile ) )
         {
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                 ->AddToken( FUObjectToken::Create( actor ) )
@@ -56,7 +56,7 @@ void AMapCheckValidator_Collisions::CheckForErrors()
             const auto response = primitive_component->GetCollisionResponseToChannel( channel );
             if ( response == ECR_Block )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )

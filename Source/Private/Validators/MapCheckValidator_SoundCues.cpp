@@ -10,7 +10,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( TObjectIterator< UAudioComponent > audio_component_iterator; audio_component_iterator; ++audio_component_iterator )
     {
@@ -39,7 +39,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
 
         if ( !IsValid( sound ) )
         {
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                 ->AddToken( FUObjectToken::Create( audio_actor ) )
@@ -56,7 +56,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
 
         if ( !IsValid( sound_cue ) )
         {
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                 ->AddToken( FUObjectToken::Create( audio_actor ) )
@@ -73,7 +73,7 @@ void AMapCheckValidator_SoundCues::CheckForErrors()
 
         if ( !IsValid( sound_class ) )
         {
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Sound Cue" ) ) )
                 ->AddToken( FUObjectToken::Create( sound_cue ) )

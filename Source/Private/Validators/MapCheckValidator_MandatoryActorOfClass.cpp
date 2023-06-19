@@ -10,13 +10,13 @@ void AMapCheckValidator_MandatoryActorOfClass::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( const auto & mandatory_class : MandatoryActorClasses )
     {
         if ( UGameplayStatics::GetActorOfClass( GetWorld(), mandatory_class ) == nullptr )
         {
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( FString::Printf( TEXT( "No actor of class %s was found in the map %s." ), *GetNameSafe( mandatory_class ), *GetNameSafe( GetWorld() ) ) ) ) );
         }

@@ -10,7 +10,7 @@ void AMapCheckValidator_LightMobility::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( TObjectIterator< ULightComponentBase > light_component_iterator; light_component_iterator; ++light_component_iterator )
     {
@@ -53,7 +53,7 @@ void AMapCheckValidator_LightMobility::CheckForErrors()
             const auto light_mobility_string = UEnum::GetDisplayValueAsText( light_mobility ).ToString();
             auto light_level_name = light_level->GetOuter()->GetName();
 
-            MapCheck.Error()
+            map_check.Error()
                 ->AddToken( FUObjectToken::Create( this ) )
                 ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                 ->AddToken( FUObjectToken::Create( light_actor ) )

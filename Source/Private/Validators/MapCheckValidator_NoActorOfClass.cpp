@@ -9,7 +9,7 @@ void AMapCheckValidator_NoActorOfClass::CheckForErrors()
 {
     Super::CheckForErrors();
 
-    FMessageLog MapCheck( "MapCheck" );
+    FMessageLog map_check( "MapCheck" );
 
     for ( const auto & forbidden_class : ForbiddenActorClasses )
     {
@@ -27,7 +27,7 @@ void AMapCheckValidator_NoActorOfClass::CheckForErrors()
                 const auto * actor_level = actor->GetLevel();
                 const auto actor_level_name = actor_level->GetOuter()->GetName();
 
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "Actor" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
