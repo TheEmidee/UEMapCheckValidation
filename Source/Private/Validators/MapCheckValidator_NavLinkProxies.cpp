@@ -71,7 +71,7 @@ void AMapCheckValidator_NavLinkProxies::CheckForErrors()
             }
             else if ( point_links_without_smart_link_modifier.Num() > 1 )
             {
-                MapCheck.Error()
+                map_check.Error()
                     ->AddToken( FUObjectToken::Create( this ) )
                     ->AddToken( FTextToken::Create( FText::FromString( "NavLinkProxy" ) ) )
                     ->AddToken( FUObjectToken::Create( actor ) )
