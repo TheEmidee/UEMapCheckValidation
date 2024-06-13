@@ -2,6 +2,7 @@
 
 #include "MapCheckValidatorBase.h"
 
+#include <AI/Navigation/NavAgentSelector.h>
 #include <CoreMinimal.h>
 
 #include "MapCheckValidator_NavLinkProxies.generated.h"
