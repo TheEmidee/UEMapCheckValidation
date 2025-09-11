@@ -1,10 +1,10 @@
 #include "MapCheckValidationCommandlet.h"
 
-#include <AI/NavigationSystemBase.h>
-#include <Editor.h>
-#include <Engine/LevelStreaming.h>
-#include <Engine/World.h>
-#include <Misc/PackageName.h>
+#include "AI/NavigationSystemBase.h"
+#include "Editor.h"
+#include "Engine/LevelStreaming.h"
+#include "Engine/World.h"
+#include "Misc/PackageName.h"
 
 // ReSharper disable once CppInconsistentNaming
 DEFINE_LOG_CATEGORY_STATIC( LogMapCheckValidation, Log, All )

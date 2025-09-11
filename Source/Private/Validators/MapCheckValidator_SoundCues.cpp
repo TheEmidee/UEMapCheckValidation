@@ -1,10 +1,10 @@
 #include "Validators/MapCheckValidator_SoundCues.h"
 
-#include <Components/AudioComponent.h>
-#include <Logging/MessageLog.h>
-#include <Misc/UObjectToken.h>
-#include <Sound/SoundClass.h>
-#include <Sound/SoundCue.h>
+#include "Components/AudioComponent.h"
+#include "Logging/MessageLog.h"
+#include "Misc/UObjectToken.h"
+#include "Sound/SoundClass.h"
+#include "Sound/SoundCue.h"
 
 void AMapCheckValidator_SoundCues::CheckForErrors()
 {

@@ -1,8 +1,8 @@
 #include "Validators/MapCheckValidator_MandatoryActorOfClass.h"
 
-#include <Kismet/GameplayStatics.h>
-#include <Logging/MessageLog.h>
-#include <Misc/UObjectToken.h>
+#include "Kismet/GameplayStatics.h"
+#include "Logging/MessageLog.h"
+#include "Misc/UObjectToken.h"
 
 #if WITH_EDITOR
 

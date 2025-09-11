@@ -1,8 +1,8 @@
 #include "Validators/MapCheckValidator_WorldSettings.h"
 
-#include <EngineUtils.h>
-#include <Logging/MessageLog.h>
-#include <Misc/UObjectToken.h>
+#include "EngineUtils.h"
+#include "Logging/MessageLog.h"
+#include "Misc/UObjectToken.h"
 
 #if WITH_EDITOR
 void AMapCheckValidator_WorldSettings::CheckForErrors()

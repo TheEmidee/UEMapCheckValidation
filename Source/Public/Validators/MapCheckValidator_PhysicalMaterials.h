@@ -2,7 +2,7 @@
 
 #include "MapCheckValidatorBase.h"
 
-#include <CoreMinimal.h>
+#include "CoreMinimal.h"
 
 #include "MapCheckValidator_PhysicalMaterials.generated.h"
 

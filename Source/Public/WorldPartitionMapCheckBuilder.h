@@ -1,7 +1,7 @@
 #pragma once
 
-#include <CoreMinimal.h>
-#include <WorldPartition/WorldPartitionBuilder.h>
+#include "CoreMinimal.h"
+#include "WorldPartition/WorldPartitionBuilder.h"
 
 #include "WorldPartitionMapCheckBuilder.generated.h"
 

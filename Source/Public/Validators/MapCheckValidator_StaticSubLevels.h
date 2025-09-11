@@ -1,8 +1,8 @@
 #pragma once
 
-#include <MapCheckValidatorBase.h>
+#include "MapCheckValidatorBase.h"
 
-#include <CoreMinimal.h>
+#include "CoreMinimal.h"
 
 #include "MapCheckValidator_StaticSubLevels.generated.h"
 
